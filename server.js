@@ -9,12 +9,7 @@ const itemController = require('./controller/itemController')
 const vendaController = require('./controller/vendaController')
 const vendedoraController = require('./controller/vendedoraController')
 
-app.use((req, res, next) => {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    console.log(`call made ${req.url}  ${req.method}`)
-    next()
-})
+
 
 app.get('/', (req, res, next) => {
     console.log('hello')
@@ -52,6 +47,33 @@ app.route(`/${item}`)
 app.route(`/${item}/:id`)
     .delete(itemController.remove)
     .get(itemController.getById)
+
+
+
+app.use((req, res, next) => {
+    //res.header("Access-Control-Allow-Origin", "*");
+    //res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    console.log(`call made ${req.url}  ${req.method}`)
+    let args = res.locals
+
+    if(args.response || args.err){
+        let response = {}
+      if(args.err){
+        response.erro = args.err
+        response.success = false
+               
+      }else{
+        response.success = true
+        response.dado = args.response
+      }
+
+
+      res.send(response)
+    }
+    else
+        next()
+})
+
 
 
 app.listen(3000)

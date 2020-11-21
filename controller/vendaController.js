@@ -1,18 +1,10 @@
-let db = require('../db').getdb()
+
 const table = 'venda'
+let dbHanlders = require("../handlers")
+
 
 function getAll(req, res, next){
-    db.all(`SELECT * FROM ${table}`,function(err, rows){
-             
-        if(err){
-            console.log(err)
-            res.send(err)
-            return
-        }
-        
-        res.send(rows)
-
-    })
+    dbHanlders.selectAllFromTable(table, req, res, next)
 }
 function getFormattedDate(){
     let timeElapsed = Date.now()
@@ -33,56 +25,23 @@ function insert(req, res, next){
     let id_item = body.id_item
     let id_vendedora = body.id_vendedora
 
-    let values = [valor, desconto, data, id_item, id_vendedora]
-    db.run(`INSERT INTO ${table}(valor, desconto, data, id_item, id_vendedora) VALUES (?, ?, ?, ?, ?)`, values, function(err){
-        if(err){
-            res.statusCode = 400
-            res.send({'erro': err})
-            console.log(err)
-            return
-        }               
-        
-        res.send({"id": this.lastID,valor, desconto, data, id_item, id_vendedora})
-    })
+    let venda = {valor, desconto, data, id_item, id_vendedora}
+    dbHanlders.insertIntotable(table, venda, req, res, next)
+   
 }
 
 function remove(req, res, next){
     let body = req.body
     let vendaId = req.params.id    
 
-    db.run(`DELETE FROM ${table} where ${table}.id = ${vendaId}` , function(err){
-        if(err || this.changes == 0){
-            res.statusCode = 400
-
-            if(!err)
-                res.send({'erro': 'venda nao encontrada'})
-            else
-                res.send(err)
-                return
-        }      
-        
-        res.send({'removido': vendaId})
-    })
+    dbHanlders.removeFromTable(table, vendaId, req, res, next)
 }
 
 
 function getById(req, res, next){
        
     let vendaId = req.params.id        
-
-    db.all(`SELECT * FROM ${table} where ${table}.id = ${vendaId}` , function(err, rows){
-        if(err || !rows){
-            res.statusCode = 400
-
-            if(!err)
-                res.send({'erro': `${vendaId} nao encontrada`})
-            else
-                res.send(err)
-            return
-        }      
-        
-        res.send(rows)
-    })
+    dbHanlders.getById(table, vendaId, req, res, next)
 }
 
 
