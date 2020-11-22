@@ -10,6 +10,7 @@ const db = new sql.Database('./dbs/lojadamae.db', sql.OPEN_READWRITE | sql.OPEN_
 //db.run('drop table item')
 //db.run('drop table vendedora')
 //db.run('drop table venda')
+//db.run('drop table tipo')
 
 let queryCriaVendedora = `CREATE TABLE IF NOT EXISTS
                 vendedora(
@@ -18,10 +19,24 @@ let queryCriaVendedora = `CREATE TABLE IF NOT EXISTS
                     UNIQUE(nome) ON CONFLICT FAIL          
                 )`
 //
+let queryCriaTipo = `CREATE TABLE IF NOT EXISTS
+                tipo(
+                        id integer PRIMARY KEY AUTOINCREMENT,
+                        nome text NOT NULL,                        
+                        UNIQUE(nome) ON CONFLICT FAIL  
+                    )
+                    `
+//
 let queryCriaItem = `CREATE TABLE IF NOT EXISTS
                 item(
                     id integer PRIMARY KEY AUTOINCREMENT,
-                    nome text NOT NULL                        
+                    nome text NOT NULL,
+                    valor real NOT NULL,
+                    modelo text DEFAULT null,
+                    id_vendedora integer DEFAULT -1,
+                    id_tipo integer NOT NULL,
+                    FOREIGN KEY (id_tipo) REFERENCES tipo(id)
+                    FOREIGN KEY (id_vendedora) REFERENCES vendedora(id)            
                 )`
 //
 let queryCriaVenda = `CREATE TABLE IF NOT EXISTS
@@ -30,13 +45,14 @@ let queryCriaVenda = `CREATE TABLE IF NOT EXISTS
                 desconto real NOT NULL,
                 data text,
                 id_item integer NOT NULL,
-                id_vendedora int NOT NULL,
+                id_vendedora integer NOT NULL,
                 FOREIGN KEY (id_item) REFERENCES item(id),
                 FOREIGN KEY (id_vendedora) REFERENCES vendedora(id)
                 )`
 //
 
 db.run(queryCriaVendedora)
+db.run(queryCriaTipo)
 db.run(queryCriaItem)
 db.run(queryCriaVenda)
 

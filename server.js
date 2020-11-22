@@ -8,7 +8,7 @@ app.use(bodyParser.json());
 const itemController = require('./controller/itemController')
 const vendaController = require('./controller/vendaController')
 const vendedoraController = require('./controller/vendedoraController')
-
+const tipoController = require('./controller/tipoController')
 
 
 app.get('/', (req, res, next) => {
@@ -23,6 +23,7 @@ app.get('/', (req, res, next) => {
 const vendedoras = 'vendedora'
 const vendas = 'venda'
 const item = 'item'
+const tipo = 'tipo'
 
 app.route(`/${vendedoras}`)
     .get(vendedoraController.getAll)
@@ -48,6 +49,14 @@ app.route(`/${item}/:id`)
     .delete(itemController.remove)
     .get(itemController.getById)
 
+app.route(`/${tipo}`)
+    .get(tipoController.getAll)
+    .post(tipoController.insert)
+
+app.route(`/${tipo}/:id`)
+    .delete(tipoController.remove)
+    .get(tipoController.getById)
+
 
 
 app.use((req, res, next) => {
@@ -66,8 +75,6 @@ app.use((req, res, next) => {
         response.success = true
         response.dado = args.response
       }
-
-
       res.send(response)
     }
     else
