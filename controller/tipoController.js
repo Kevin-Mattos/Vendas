@@ -1,6 +1,6 @@
 
 
-const table = 'item'
+const table = 'tipo'
 let dbHanlders = require("../handlers")
 
 
@@ -10,17 +10,13 @@ function getAll(req, res, next){
 
 function insert(req, res, next){
     let body = req.body
-    let nome = body.nome  
-    let id_tipo = body.id_tipo
-    let id_vendedora = body.id_vendedora
-    let valor = body.valor
+    let nome = body.nome    
     
-    item = {nome, id_tipo, id_vendedora, valor}
+    item = {nome}
     dbHanlders.insertIntotable(table, item, req, res, next)
 }
 
-function remove(req, res, next){
-    let body = req.body
+function remove(req, res, next){   
     let itemId = req.params.id
     dbHanlders.removeFromTable(table, itemId, req, res, next)
 }
