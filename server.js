@@ -48,6 +48,7 @@ app.route(`/${item}`)
 app.route(`/${item}/:id`)
     .delete(itemController.remove)
     .get(itemController.getById)
+    .put(itemController.update)
 
 app.route(`/${tipo}`)
     .get(tipoController.getAll)

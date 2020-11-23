@@ -31,10 +31,14 @@ function getById(req, res, next){
     dbHanlders.getById(table, itemId, req, res, next)
 }
 
+function update(req, res, next){
+    dbHanlders.update(table, req.body, req, res, next)
+}
 
 module.exports = {
     getAll,
     insert,
     remove,
-    getById
+    getById,
+    update
 }

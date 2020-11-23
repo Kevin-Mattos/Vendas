@@ -16,6 +16,11 @@ function getFormattedDate(){
     
 }
 
+function changeItemVendido(id_item){
+    let table = "item"
+    dbHanlders.update(table,{"id": id_item, vendido : true})
+}
+
 function insert(req, res, next){
     let body = req.body
     
@@ -26,7 +31,8 @@ function insert(req, res, next){
     let id_vendedora = body.id_vendedora
 
     let venda = {valor, desconto, data, id_item, id_vendedora}
-    dbHanlders.insertIntotable(table, venda, req, res, next)
+    dbHanlders.insertVenda(table, venda,req, res, next)
+
    
 }
 
