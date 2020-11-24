@@ -31,7 +31,7 @@ function insert(req, res, next){
     let id_vendedora = body.id_vendedora
 
     let venda = {valor, desconto, data, id_item, id_vendedora}
-    dbHanlders.insertVenda(table, venda,req, res, next)
+    dbHanlders.insertIntotable(table, venda,req, res, next)
 
    
 }
@@ -50,10 +50,18 @@ function getById(req, res, next){
     dbHanlders.getById(table, vendaId, req, res, next)
 }
 
+function update(req, res, next){
+    let body = req.body
+    
+
+    dbHanlders.update(table, body, req, res, next)
+
+}
 
 module.exports = {
     getAll,
     insert,
     remove,
-    getById
+    getById,
+    update
 }

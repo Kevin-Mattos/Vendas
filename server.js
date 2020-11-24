@@ -40,6 +40,7 @@ app.route(`/${vendas}`)
 app.route(`/${vendas}/:id`)
     .delete(vendaController.remove)
     .get(vendaController.getById)
+    .put(vendaController.update)
 
 app.route(`/${item}`)
     .get(itemController.getAll)

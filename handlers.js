@@ -27,36 +27,6 @@ function insertIntotable(table, obj, req, res,next){
     })
 }
 
-function insertVenda(table, obj, req, res,next){
-    let keys = Object.keys(obj).map(key => `${key}`).join(',')
-    let values = Object.values(obj)
-    let placeholders = values.map((value) => '?').join(',');
-
-    db.run(`INSERT INTO ${table}(${keys}) VALUES (${placeholders})`, values, function(err){
-        if(err){   
-            res.statusCode = 400         
-            console.log(err)
-            res.locals.err = err   
-            next()      
-        }else{
-
-            'UPDATE ${table} SET ${placeholders} WHERE ${table}.id = ${id}'
-            db.run(`UPDATE Item SET vendido = 1 WHERE Item.id = ${obj.id_item}`, function(err){
-                if(err)
-                    console.log(err)
-
-                obj.id = this.lastID
-                res.locals.response = obj
-                console.log(obj)
-                next()
-            })
-            
-            
-        }          
-        
-    })
-}
-
 function removeFromTable(table, id, req, res, next){
 
     db.run(`DELETE FROM ${table} where ${table}.id = ${id}` , function(err){
@@ -85,6 +55,9 @@ function removeFromTable(table, id, req, res, next){
         
         next()//res.send({'removido': id})
     })
+
+   
+
 }
 
 
@@ -104,7 +77,7 @@ function getById(table, id, req, res, next){
             }
             
         }else{
-            res.locals.response = rows
+            res.locals.response = rows[0]
         }
         
         next()
@@ -150,8 +123,10 @@ function update(table, obj,req, res, next){
             obj.id = id
             //obj.vendido = obj.vendido == 1
 
-            res.locals.response = obj
+            getById(table, id, req, res, next)
             console.log(obj)
+
+            return
         }    
 
         next()
@@ -164,6 +139,5 @@ module.exports = {
     insertIntotable,
     removeFromTable,
     getById,
-    update,
-    insertVenda
+    update    
 }
