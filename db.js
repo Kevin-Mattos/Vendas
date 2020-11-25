@@ -1,6 +1,6 @@
 const sql = require('sqlite3').verbose()
 
-const db = new sql.Database('./dbs/lojadamae.db', sql.OPEN_READWRITE | sql.OPEN_CREATE, (err) => {
+const db = new sql.Database('./dbs/lojadamae2.db', sql.OPEN_READWRITE | sql.OPEN_CREATE, (err) => {
     if (err) {
       return console.error(err.message);
     }
@@ -31,10 +31,20 @@ let triggerOndeleteVendedora = `create trigger IF NOT EXISTS transfereitem befor
                 end`
 //
 //
-//db.run('drop table vendedora')
-//db.run('drop table venda')
-//db.run('drop table tipo')
-//db.run('drop table item')
+// db.run('drop table vendedora', function(err){
+//     db.run('drop table venda', function(err){
+//         db.run('drop table tipo', function(err){
+//             db.run('drop table item', function(err){
+//                 db.run('drop table maleta', function(err){
+
+//                 })
+//             })
+//         })
+//     })
+// })
+
+
+
 
 //db.run("insert into vendedora(nome) Values('Voce')")
 
@@ -70,17 +80,30 @@ let queryCriaTipo = `CREATE TABLE IF NOT EXISTS
                     )
                     `
 //
+let queryCriaMaleta = `CREATE TABLE IF NOT EXISTS
+                maleta(
+                        id integer PRIMARY KEY AUTOINCREMENT,
+                        nome text NOT NULL,                        
+                        UNIQUE(nome) ON CONFLICT FAIL  
+                    )
+                    `
+//
+
+
 let queryCriaItem = `CREATE TABLE IF NOT EXISTS
                 item(
                     id integer PRIMARY KEY AUTOINCREMENT,
                     nome text NOT NULL,
                     valor real NOT NULL,
                     vendido integer default 0,
-                    modelo text DEFAULT null,                    
+                    modelo text DEFAULT null,      
+                    id_maleta integer DEFAULT NULL,              
                     id_vendedora integer DEFAULT 1,
                     id_tipo integer NOT NULL,
                     FOREIGN KEY (id_tipo) REFERENCES tipo(id) ON DELETE CASCADE,
-                    FOREIGN KEY (id_vendedora) REFERENCES vendedora(id) ON DELETE SET default          
+                    FOREIGN KEY (id_vendedora) REFERENCES vendedora(id) ON DELETE SET default,
+                    FOREIGN KEY (id_maleta) REFERENCES maleta(id) ON DELETE SET default  
+
                 )`
 //
 let queryCriaVenda = `CREATE TABLE IF NOT EXISTS
@@ -97,19 +120,21 @@ let queryCriaVenda = `CREATE TABLE IF NOT EXISTS
 
 db.run(queryCriaVendedora, function(err){
     db.run(queryCriaTipo, function(err){
-        db.run(queryCriaItemRemovido, function(err){
-            db.run(queryCriaItem, function(err){
-                db.run(queryCriaVenda, function(err){
-                    db.run(triggerOnInsertVenda, function(err){
-                        db.run(triggerOndeleteVenda, function(err){
-                            db.run(triggerOndeleteItem, function(err){
-                                db.run(triggerOndeleteVendedora, function(err){ 
+        db.run(queryCriaMaleta, function(err){
+            db.run(queryCriaItemRemovido, function(err){
+                db.run(queryCriaItem, function(err){
+                    db.run(queryCriaVenda, function(err){
+                        db.run(triggerOnInsertVenda, function(err){
+                            db.run(triggerOndeleteVenda, function(err){
+                                db.run(triggerOndeleteItem, function(err){
+                                    db.run(triggerOndeleteVendedora, function(err){ 
                     
+                                    })
                                 })
                             })
                         })
-                    })
-                })                
+                    })                
+                })
             })
         })
     })

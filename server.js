@@ -9,6 +9,7 @@ const itemController = require('./controller/itemController')
 const vendaController = require('./controller/vendaController')
 const vendedoraController = require('./controller/vendedoraController')
 const tipoController = require('./controller/tipoController')
+const maletaController = require('./controller/maletaController')
 
 
 app.get('/', (req, res, next) => {
@@ -24,6 +25,7 @@ const vendedoras = 'vendedora'
 const vendas = 'venda'
 const item = 'item'
 const tipo = 'tipo'
+const maleta = 'maleta'
 
 app.route(`/${vendedoras}`)
     .get(vendedoraController.getAll)
@@ -58,6 +60,16 @@ app.route(`/${tipo}`)
 app.route(`/${tipo}/:id`)
     .delete(tipoController.remove)
     .get(tipoController.getById)
+
+
+
+app.route(`/${maleta}`)
+    .get(maletaController.getAll)
+    .post(maletaController.insert)
+
+app.route(`/${maleta}/:id`)
+    .delete(maletaController.remove)
+    .get(maletaController.getById)
 
 
 
