@@ -76,7 +76,7 @@ app.route(`/${maleta}/:id`)
 app.use((req, res, next) => {
     //res.header("Access-Control-Allow-Origin", "*");
     //res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    console.log(`call made ${req.url}  ${req.method}`)
+    console.log(`call made ${req.url}  ${req.method} at ${Date(Date.now())}`)
     let args = res.locals
 
     if(args.response || args.err){

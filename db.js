@@ -67,7 +67,7 @@ let queryCriaItemRemovido = `CREATE TABLE IF NOT EXISTS
                     valor real NOT NULL,
                     vendido integer default 0,
                     modelo text DEFAULT null,                    
-                    id_vendedora integer DEFAULT -1,
+                    id_vendedora integer DEFAULT 1,
                     id_tipo integer DEFAULT NULL                   
                 )`
 //

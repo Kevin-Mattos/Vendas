@@ -3,7 +3,7 @@ const table = 'venda'
 let dbHanlders = require("../handlers")
 
 
-function getAll(req, res, next){
+async function getAll(req, res, next){
     dbHanlders.selectAllFromTable(table, req, res, next)
 }
 function getFormattedDate(){
@@ -12,21 +12,17 @@ function getFormattedDate(){
     let format = "yy-mm-dd"
     return format.replace('mm', date.getMonth() + 1)
     .replace('yy', date.getFullYear())
-	.replace('dd', date.getDate());
-    
+    .replace('dd', date.getDate());
+        
 }
 
-function changeItemVendido(id_item){
-    let table = "item"
-    dbHanlders.update(table,{"id": id_item, vendido : true})
-}
-
-function insert(req, res, next){
+async function insert(req, res, next){
     let body = req.body
     
     let valor = body.valor
     let desconto = body.desconto
     let data = getFormattedDate()
+    console.log(data)
     let id_item = body.id_item
     let id_vendedora = body.id_vendedora
 
@@ -36,7 +32,7 @@ function insert(req, res, next){
    
 }
 
-function remove(req, res, next){
+async function remove(req, res, next){
     let body = req.body
     let vendaId = req.params.id    
 
@@ -44,13 +40,13 @@ function remove(req, res, next){
 }
 
 
-function getById(req, res, next){
+async function getById(req, res, next){
        
     let vendaId = req.params.id        
     dbHanlders.getById(table, vendaId, req, res, next)
 }
 
-function update(req, res, next){
+async function update(req, res, next){
     let body = req.body
     
 

@@ -16,6 +16,16 @@ function insert(req, res, next){
     dbHanlders.insertIntotable(table, item, req, res, next)
 }
 
+
+function update(req, res, next){
+    let body = req.body
+    let nome = body.nome    
+    
+    item = {nome}
+    dbHanlders.update(table, item, req, res, next)
+}
+
+
 function remove(req, res, next){   
     let itemId = req.params.id
     dbHanlders.removeFromTable(table, itemId, req, res, next)
@@ -32,5 +42,6 @@ module.exports = {
     getAll,
     insert,
     remove,
-    getById
+    getById,
+    update
 }
