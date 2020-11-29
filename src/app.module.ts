@@ -4,8 +4,15 @@ import { MaletaModule } from './maleta/maleta.module';
 import { TipoModule } from './tipo/tipo.module';
 import { VendaModule } from './venda/venda.module';
 import { VendedoraModule } from './vendedora/vendedora.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { typeOrmConfig } from './config/typeorm.config';
 
 @Module({
-  imports: [ProdutoModule, MaletaModule, TipoModule, VendaModule, VendedoraModule],
+  imports: [TypeOrmModule.forRoot(typeOrmConfig),
+     ProdutoModule,
+      MaletaModule,
+       TipoModule,
+        VendaModule,
+         VendedoraModule],
 })
 export class AppModule {}

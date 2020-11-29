@@ -17,7 +17,7 @@ export class MaletaController {
     @Post()
     @UsePipes(ValidationPipe)
     async insert(@Body() createMaletaDto: CreateMaletaDto){
-        console.log(createMaletaDto)
+        return this.maletaService.insertMaleta(createMaletaDto)
     }
 
     @Delete()
