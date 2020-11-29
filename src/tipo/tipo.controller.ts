@@ -1,4 +1,5 @@
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, UsePipes, ValidationPipe } from '@nestjs/common';
+import { CreateTipoDto } from './dto/createTipoDto.dto';
 import { TipoService } from './tipo.service';
 
 @Controller('tipo')
@@ -15,7 +16,8 @@ export class TipoController {
     }
 
     @Post()
-    async insert(){
+    @UsePipes(ValidationPipe)
+    async insert(@Body() createTipoDto: CreateTipoDto){
 
     }
 

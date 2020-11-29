@@ -1,9 +1,11 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, UsePipes, ValidationPipe } from '@nestjs/common';
+import { CreateVendedoraDto } from './dto/createVendedoraDto.dto';
+import { VendedoraService } from './vendedora.service';
 
 @Controller('vendedora')
 export class VendedoraController {
-    private readonly vendedoraService: VendedoraController
-    constructor(vendedoraService: VendedoraController){
+    private readonly vendedoraService: VendedoraService
+    constructor(vendedoraService: VendedoraService){
         this.vendedoraService = vendedoraService
     }
 
@@ -14,7 +16,8 @@ export class VendedoraController {
     }
 
     @Post()
-    async insert(){
+    @UsePipes(ValidationPipe)
+    async insert(@Body() createVendedoraDto: CreateVendedoraDto){
 
     }
 

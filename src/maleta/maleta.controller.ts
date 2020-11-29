@@ -1,4 +1,5 @@
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, UsePipes, ValidationPipe } from '@nestjs/common';
+import { CreateMaletaDto } from './dto/create-maleta.dto';
 import { MaletaService } from './maleta.service';
 
 @Controller('maleta')
@@ -14,8 +15,9 @@ export class MaletaController {
     }
 
     @Post()
-    async insert(){
-
+    @UsePipes(ValidationPipe)
+    async insert(@Body() createMaletaDto: CreateMaletaDto){
+        console.log(createMaletaDto)
     }
 
     @Delete()
