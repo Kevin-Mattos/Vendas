@@ -1,4 +1,5 @@
 import { Body, Controller, Delete, Get, Param, Post, Put, UsePipes, ValidationPipe } from '@nestjs/common';
+import { CreateVendaDto } from 'src/venda/dto/createVendaDto.dto';
 import { CreateVendedoraDto } from './dto/createVendedoraDto.dto';
 import { VendedoraService } from './vendedora.service';
 
@@ -17,12 +18,12 @@ export class VendedoraController {
 
     @Post()
     @UsePipes(ValidationPipe)
-    async insert(@Body() createVendedoraDto: CreateVendedoraDto){
+    async insert(@Body() createVendaDto: CreateVendaDto){
 
     }
 
-    @Delete()
-    async remove(){
+    @Delete('/:id')
+    async remove(@Param('id') id: number){
 
     }
 
@@ -31,9 +32,9 @@ export class VendedoraController {
 
     }
 
-    @Put('/:id')
-    async update(@Param('id') id: number){
+    // @Put('/:id')
+    // async update(@Param('id') id: number){
         
-    }
+    // }
 
 }

@@ -1,11 +1,8 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { myBaseEntity } from "src/baseClass/baseEntity.entity";
+import { BaseEntity, Column, Entity,  PrimaryGeneratedColumn, Unique } from "typeorm";
 
-@Entity()
-export class Maleta extends BaseEntity{
+@Unique(['nome'])
+@Entity('maleta')
+export class Maleta extends myBaseEntity{
 
-    @PrimaryGeneratedColumn()
-    id: number
-
-    @Column()
-    nome: string
 }

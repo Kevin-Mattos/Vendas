@@ -1,5 +1,6 @@
-import { Body, Controller, Delete, Get, Param, Post, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, UsePipes, ValidationPipe } from '@nestjs/common';
 import { CreateMaletaDto } from './dto/create-maleta.dto';
+import { Maleta } from './maleta.entity';
 import { MaletaService } from './maleta.service';
 
 @Controller('maleta')
@@ -10,24 +11,24 @@ export class MaletaController {
     }
 
     @Get()
-    async getAll(){
-
+    getAll(): Promise<Maleta[]>{
+        return this.maletaService.getAllMaletas()
     }
 
     @Post()
     @UsePipes(ValidationPipe)
-    async insert(@Body() createMaletaDto: CreateMaletaDto){
+    insert(@Body() createMaletaDto: CreateMaletaDto): Promise<Maleta>{
         return this.maletaService.insertMaleta(createMaletaDto)
     }
 
-    @Delete()
-    async remove(){
-
+    @Delete('/:id')
+    remove(@Param('id', ParseIntPipe) id: number): Promise<Maleta>{
+        return this.maletaService.removeMaleta(id)
     }
 
     @Get('/:id')
-    async getById(@Param('id') id: number){
-
+    getById(@Param('id', ParseIntPipe) id: number): Promise<Maleta>{
+        return this.maletaService.getMaletaById(id)
     }
 
 

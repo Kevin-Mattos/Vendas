@@ -1,24 +1,27 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
 import { CreateProdutoDto } from './dto/createProdutoDto.dto';
-
+import { Produto } from './produto.entity';
+import { ProdutoRepository } from './produto.repository';
 @Injectable()
 export class ProdutoService {
     readonly table = 'produto'
-    
-    getAllProduto(){
+    constructor(@InjectRepository(ProdutoRepository) private repository: ProdutoRepository){}
 
+    async getAllProduto(): Promise<Produto[]>{
+        return await this.repository.find()
     }
 
-    getProdutoById(id: number){
-
+    async getProdutoById(id: number): Promise<Produto>{
+        return await this.repository.findOne(id)
     }
 
-    insertProduto(createProdutoDto: CreateProdutoDto){
+    async insertProduto(createProdutoDto: CreateProdutoDto): Promise<Produto>{
         console.log(createProdutoDto)
-
+        return await this.repository.insertProduto(createProdutoDto)
     }
 
-    removeProduto(id: number){
-
+    async removeProduto(id: number): Promise<void>{
+        await this.repository.delete(id)
     }
 }

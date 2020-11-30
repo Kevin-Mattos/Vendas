@@ -1,23 +1,28 @@
 import { Injectable } from '@nestjs/common';
-import { CreateVendedoraDto } from 'src/vendedora/dto/createVendedoraDto.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { CreateVendaDto } from './dto/createVendaDto.dto';
+import { Venda } from './venda.entity';
+import { VendaRepository } from './venda.repository';
 
 @Injectable()
 export class VendaService {
     readonly table = 'venda'
-    getAllVendedoras(){
-
+    constructor(@InjectRepository(VendaRepository) private repository: VendaRepository){}
+    async getAllVendas(): Promise<Venda[]>{
+        return await this.repository.find()
     }
 
-    getVendedoraById(id: number){
-
+    async getVendaById(id: number): Promise<Venda>{
+        return await this.repository.findOne(id)
     }
 
-    insertVendedora(createVendedoraDto: CreateVendedoraDto){
-        console.log(createVendedoraDto)
-      
+    async insertVenda(createVendaDto: CreateVendaDto): Promise<Venda>{
+        console.log(createVendaDto)
+        return this.repository.insertVenda(createVendaDto)
     }
 
-    removeVendedora(id: number){
-
+    async removeVenda(id: number): Promise<void>{
+        await this.repository.delete(id)
+        return 
     }
 }

@@ -10,7 +10,7 @@ export class CreateVendaDto{
     desconto: number
     
     @IsNumber()
-    id_item: number
+    id_produto: number
 
     @IsNumber()
     id_vendedora: number

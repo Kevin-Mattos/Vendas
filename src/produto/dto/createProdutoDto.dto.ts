@@ -4,6 +4,9 @@ export class CreateProdutoDto{
 
     
     @IsNotEmpty()
+    nome: string
+
+    @IsNotEmpty()
     valor: number
 
     @IsOptional()
