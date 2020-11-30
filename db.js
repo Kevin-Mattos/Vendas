@@ -1,6 +1,6 @@
 const sql = require('sqlite3').verbose()
 
-const db = new sql.Database('./dbs/lojadamae2.db', sql.OPEN_READWRITE | sql.OPEN_CREATE, (err) => {
+const db = new sql.Database('./dbs/lojadamae3.db', sql.OPEN_READWRITE | sql.OPEN_CREATE, (err) => {
     if (err) {
       return console.error(err.message);
     }
@@ -9,14 +9,14 @@ const db = new sql.Database('./dbs/lojadamae2.db', sql.OPEN_READWRITE | sql.OPEN
 
 let triggerOnInsertVenda = `create trigger IF NOT EXISTS atualizaVenda after insert on venda
                 begin
-                UPDATE item SET vendido = 1 WHERE new.id_item = item.id;
+                UPDATE item SET vendido = 1 WHERE new.id_produto = item.id;
                 end`
 
 //
 
 let triggerOndeleteVenda = `create trigger IF NOT EXISTS removeVenda after delete on venda
                 begin
-                UPDATE item SET vendido = 0 WHERE old.id_item = item.id;
+                UPDATE item SET vendido = 0 WHERE old.id_produto = item.id;
                 end`
 //
 
@@ -91,7 +91,7 @@ let queryCriaMaleta = `CREATE TABLE IF NOT EXISTS
 
 
 let queryCriaItem = `CREATE TABLE IF NOT EXISTS
-                item(
+                produto(
                     id integer PRIMARY KEY AUTOINCREMENT,
                     nome text NOT NULL,
                     valor real NOT NULL,
@@ -111,9 +111,9 @@ let queryCriaVenda = `CREATE TABLE IF NOT EXISTS
                 valor real NOT NULL,
                 desconto real NOT NULL,
                 data text,
-                id_item integer NOT NULL,
+                id_produto integer NOT NULL,
                 id_vendedora integer DEFAULT NULL,
-                FOREIGN KEY (id_item) REFERENCES item(id) -- ON DELETE CASCADE,
+                FOREIGN KEY (id_produto) REFERENCES produto(id) -- ON DELETE CASCADE,
                 FOREIGN KEY (id_vendedora) REFERENCES vendedora(id) -- ON DELETE SET NULL
                 )`
 //
