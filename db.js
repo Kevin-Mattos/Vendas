@@ -6,28 +6,28 @@ const db = new sql.Database('./dbs/lojadamae3.db', sql.OPEN_READWRITE | sql.OPEN
     }
     console.log('Connected to the users database.');
 })
-
+produto
 let triggerOnInsertVenda = `create trigger IF NOT EXISTS atualizaVenda after insert on venda
                 begin
-                UPDATE item SET vendido = 1 WHERE new.id_produto = item.id;
+                UPDATE produto SET vendido = 1 WHERE new.id_produto = produto.id;
                 end`
 
 //
 
 let triggerOndeleteVenda = `create trigger IF NOT EXISTS removeVenda after delete on venda
                 begin
-                UPDATE item SET vendido = 0 WHERE old.id_produto = item.id;
+                UPDATE produto SET vendido = 0 WHERE old.id_produto = produto.id;
                 end`
 //
 
-let triggerOndeleteItem = `create trigger IF NOT EXISTS removeItem after delete on item
-                begin
-                INSERT INTO itemremovido VALUES(old.id, old.nome, old.valor, old.vendido,old.modelo, old.id_vendedora, old.id_tipo);
-                end`
+// let triggerOndeleteItem = `create trigger IF NOT EXISTS removePrdutom after delete on produto
+//                 begin
+//                 INSERT INTO itemremovido VALUES(old.id, old.nome, old.valor, old.vendido,old.modelo, old.id_vendedora, old.id_tipo);
+//                 end`
 
-let triggerOndeleteVendedora = `create trigger IF NOT EXISTS transfereitem before delete on Vendedora
+let triggerOndeleteVendedora = `create trigger IF NOT EXISTS transfereProduto before delete on Vendedora
                 begin
-                UPDATE Item SET id_vendedora = 1 WHERE old.id = item.id;
+                UPDATE produto SET id_vendedora = 1 WHERE old.id = produto.id_vendedora;
                 end`
 //
 //
@@ -60,16 +60,16 @@ let queryCriaVendedora = `CREATE TABLE IF NOT EXISTS
                 )`
 //
 
-let queryCriaItemRemovido = `CREATE TABLE IF NOT EXISTS
-                itemremovido(
-                    id integer PRIMARY KEY,
-                    nome text NOT NULL,
-                    valor real NOT NULL,
-                    vendido integer default 0,
-                    modelo text DEFAULT null,                    
-                    id_vendedora integer DEFAULT 1,
-                    id_tipo integer DEFAULT NULL                   
-                )`
+// let queryCriaItemRemovido = `CREATE TABLE IF NOT EXISTS
+//                 itemremovido(
+//                     id integer PRIMARY KEY,
+//                     nome text NOT NULL,
+//                     valor real NOT NULL,
+//                     vendido integer default 0,
+//                     modelo text DEFAULT null,                    
+//                     id_vendedora integer DEFAULT 1,
+//                     id_tipo integer DEFAULT NULL                   
+//                 )`
 //
 
 let queryCriaTipo = `CREATE TABLE IF NOT EXISTS
@@ -121,20 +121,20 @@ let queryCriaVenda = `CREATE TABLE IF NOT EXISTS
 db.run(queryCriaVendedora, function(err){
     db.run(queryCriaTipo, function(err){
         db.run(queryCriaMaleta, function(err){
-            db.run(queryCriaItemRemovido, function(err){
+            //db.run(queryCriaItemRemovido, function(err){
                 db.run(queryCriaItem, function(err){
                     db.run(queryCriaVenda, function(err){
                         db.run(triggerOnInsertVenda, function(err){
                             db.run(triggerOndeleteVenda, function(err){
-                                db.run(triggerOndeleteItem, function(err){
+                              //  db.run(triggerOndeleteItem, function(err){
                                     db.run(triggerOndeleteVendedora, function(err){ 
                     
                                     })
-                                })
+                              //  })
                             })
                         })
                     })                
-                })
+                //})
             })
         })
     })
