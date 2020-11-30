@@ -12,6 +12,7 @@ export class VendaRepository extends Repository<Venda>{
  
         venda.valor = valor
         venda.desconto = desconto
+        venda.data = this.getFormattedDate()
         venda.id_produto = id_produto,
         venda.id_vendedora = id_vendedora
      
@@ -19,4 +20,15 @@ export class VendaRepository extends Repository<Venda>{
         
         return  venda
     }
+
+    getFormattedDate(): string{
+        let timeElapsed = Date.now()
+        let date = new Date(timeElapsed)
+        let format = "yy-mm-dd"
+        return format.replace('mm', `${date.getMonth() + 1}`)
+        .replace('yy', `${date.getFullYear()}`)
+        .replace('dd', `${date.getDate()}`);
+            
+    }
+
 }

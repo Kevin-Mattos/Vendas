@@ -2,10 +2,10 @@ import { Module } from '@nestjs/common';
 import { VendedoraService } from './vendedora.service';
 import { VendedoraController } from './vendedora.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { VendaRepository } from 'src/venda/venda.repository';
+import { VendedoraRepository } from './vendedora.repository';
 
 @Module({
-   imports:[TypeOrmModule.forFeature([VendaRepository])],
+   imports:[TypeOrmModule.forFeature([VendedoraRepository])],
   providers: [VendedoraService],
   controllers: [VendedoraController]
 })

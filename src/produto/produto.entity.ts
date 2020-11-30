@@ -11,7 +11,7 @@ export class Produto extends myBaseEntity{
     valor: number
 
     @Column()
-    vendido: boolean
+    vendido: number
 
     @Column()
     modelo: string

@@ -7,7 +7,7 @@ import { Vendedora } from "./vendedora.entity";
 @EntityRepository(Vendedora)
 export class VendedoraRepository extends Repository<Vendedora>{
 
-    async insertMaleta(createVendedoraDto: CreateVendedoraDto): Promise<Vendedora>{
+    async insertVendedora(createVendedoraDto: CreateVendedoraDto): Promise<Vendedora>{
         const {nome} = createVendedoraDto
         let vendedora = new Vendedora()
         vendedora.nome = nome
