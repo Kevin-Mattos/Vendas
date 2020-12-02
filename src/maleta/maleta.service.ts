@@ -1,6 +1,8 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateMaletaDto } from './dto/create-maleta.dto';
+import { GetMaletaFilterDto } from './dto/getMaletaFilter.dto';
+import { UpdateMaletaDto } from './dto/updateMaleta.dto';
 import { Maleta } from './maleta.entity';
 import { MaletaRepository } from './maleta.repository';
 
@@ -10,8 +12,10 @@ export class MaletaService {
     constructor(@InjectRepository(MaletaRepository) private repository: MaletaRepository){}
 
     readonly table = 'maleta'
-    async getAllMaletas(): Promise<Maleta[]>{
-        return await this.repository.find()
+    async getAllMaletas(maletaFilterDto: GetMaletaFilterDto): Promise<Maleta[]>{
+        const found =  await this.repository.getMaletas(maletaFilterDto)
+
+        return found
     }
 
     async getMaletaById(id: number): Promise<Maleta>{
@@ -33,6 +37,10 @@ export class MaletaService {
         const remov = await this.repository.delete(id)
         console.log(remov)
         return mal
+    }
+
+    async updateMaleta(id: number, updateMaletaDto: UpdateMaletaDto): Promise<Maleta>{
+        return this.repository.updateMaleta(id, updateMaletaDto)
     }
 
 }

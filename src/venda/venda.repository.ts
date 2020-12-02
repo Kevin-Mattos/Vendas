@@ -15,7 +15,7 @@ export class VendaRepository extends Repository<Venda>{
         venda.data = this.getFormattedDate()
         venda.id_produto = id_produto,
         venda.id_vendedora = id_vendedora
-     
+        
         await   venda.save()      
         
         return  venda

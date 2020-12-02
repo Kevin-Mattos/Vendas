@@ -20,4 +20,14 @@ export class VendedoraRepository extends Repository<Vendedora>{
         
         return vendedora
     }
+
+
+    async getAllVendedoras(): Promise<Vendedora[]>{
+        let query = this.createQueryBuilder('vendedora')
+        
+        query.leftJoinAndSelect("vendedora.produtos", "produto")
+
+        return await query.getMany()
+
+    }
 }

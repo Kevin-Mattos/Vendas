@@ -12,7 +12,7 @@ export class VendedoraService {
     constructor(@InjectRepository(VendedoraRepository) private repository: VendedoraRepository){}
 
     async getAllVendas(): Promise<Vendedora[]>{
-        return this.repository.find()
+        return this.repository.find()//this.repository.getAllVendedoras()//
     }
 
     async getVendaById(id: number): Promise<Vendedora>{

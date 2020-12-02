@@ -9,7 +9,7 @@ export class ProdutoService {
     constructor(@InjectRepository(ProdutoRepository) private repository: ProdutoRepository){}
 
     async getAllProduto(): Promise<Produto[]>{
-        return await this.repository.find()
+        return await this.repository.find()//this.repository.getProdutos()//
     }
 
     async getProdutoById(id: number): Promise<Produto>{
@@ -19,6 +19,11 @@ export class ProdutoService {
     async insertProduto(createProdutoDto: CreateProdutoDto): Promise<Produto>{
         console.log(createProdutoDto)
         return await this.repository.insertProduto(createProdutoDto)
+    }
+
+    async updateProduto(id: number, createProdutoDto: CreateProdutoDto): Promise<Produto>{
+        console.log(createProdutoDto)
+        return await this.repository.updateProduto(id,createProdutoDto)
     }
 
     async removeProduto(id: number): Promise<void>{

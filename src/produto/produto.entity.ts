@@ -1,5 +1,6 @@
 import { myBaseEntity } from "src/baseClass/baseEntity.entity";
-import { Column, Entity } from "typeorm";
+import { Vendedora } from "src/vendedora/vendedora.entity";
+import { Column, Entity, JoinColumn, ManyToOne, OneToOne } from "typeorm";
 
 
 @Entity('produto')
@@ -24,6 +25,12 @@ export class Produto extends myBaseEntity{
     
     @Column()
     id_vendedora: number
+
+
+   
+    @ManyToOne(() => Vendedora, vendedora => vendedora.produtos)    
+    @JoinColumn({name: 'id_vendedora'})
+    vendedora: Vendedora;
 
 
 

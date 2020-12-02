@@ -5,4 +5,6 @@ import { BaseEntity, Column, Entity,  PrimaryGeneratedColumn, Unique } from "typ
 @Entity('maleta')
 export class Maleta extends myBaseEntity{
 
+    @Column()
+    id_vendedora: number
 }
