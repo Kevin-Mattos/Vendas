@@ -19,10 +19,15 @@ export class TipoService {
 
     async insertTipo(createTipoDto: CreateTipoDto): Promise<Tipo>{
         console.log(createTipoDto)
-       return await this.repository.insertTipo(createTipoDto)
+        return await this.repository.insertTipo(createTipoDto)
     }
 
-    async removeTipo(id: number): Promise<void>{
+    async removeTipo(id: number): Promise<number>{
         await this.repository.delete(id)
+        return id
+    }
+
+    async updateTipo(id: number, createTipoDto: CreateTipoDto): Promise<Tipo>{
+        return await this.repository.atualizaTipo(id, createTipoDto)
     }
 }

@@ -20,4 +20,16 @@ export class TipoRepository extends Repository<Tipo>{
         
         return tipo
     }
+
+    async atualizaTipo(id: number, createTipoDto: CreateTipoDto): Promise<Tipo>{
+        
+        const {nome} = createTipoDto
+        let tipo = new Tipo()
+        tipo.id = id       
+        tipo.nome = nome
+
+        return await this.save(tipo)      
+        
+        
+    }
 }

@@ -32,11 +32,10 @@ export class MaletaService {
         return await this.repository.insertMaleta(createMaletaDto)
     }
 
-    async removeMaleta(id: number): Promise<Maleta>{
-        const mal = await this.getMaletaById(id)
+    async removeMaleta(id: number): Promise<number>{        
         const remov = await this.repository.delete(id)
-        console.log(remov)
-        return mal
+        
+        return id
     }
 
     async updateMaleta(id: number, updateMaletaDto: UpdateMaletaDto): Promise<Maleta>{

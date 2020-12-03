@@ -1,13 +1,14 @@
 import { EntityRepository, Repository } from "typeorm";
 import { CreateVendaDto } from "./dto/createVendaDto.dto";
+import { UpdateVendaDto } from "./dto/updateVendaDto.dto"
 import { Venda } from "./venda.entity";
 
 
 @EntityRepository(Venda)
 export class VendaRepository extends Repository<Venda>{
 
-    async insertVenda(createProdutoDto: CreateVendaDto): Promise<Venda>{
-        const {valor, desconto, id_produto, id_vendedora} = createProdutoDto
+    async insertVenda(createVendaDto: CreateVendaDto): Promise<Venda>{
+        const {valor, desconto, id_produto, id_vendedora} = createVendaDto
         let venda = new Venda()
  
         venda.valor = valor
@@ -19,6 +20,21 @@ export class VendaRepository extends Repository<Venda>{
         await   venda.save()      
         
         return  venda
+    }
+
+
+    async updateVenda(id: number, updateVendaDto: UpdateVendaDto): Promise<Venda>{
+        const {valor, desconto, id_produto, id_vendedora, data} = updateVendaDto
+        let venda = new Venda() 
+        venda.valor = valor
+        venda.desconto = desconto    
+        venda.data = data   
+        venda.id_produto = id_produto
+        venda.id_vendedora = id_vendedora
+        venda.id = id
+
+        return await this.save(venda)
+        
     }
 
     getFormattedDate(): string{
