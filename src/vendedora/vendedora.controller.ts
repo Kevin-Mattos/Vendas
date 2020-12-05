@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, UsePipes, ValidationPipe } from '@nestjs/common';
 import { CreateVendaDto } from 'src/venda/dto/createVendaDto.dto';
 import { CreateVendedoraDto } from './dto/createVendedoraDto.dto';
 import { Vendedora } from './vendedora.entity';
@@ -24,7 +24,7 @@ export class VendedoraController {
     }
 
     @Delete('/:id')
-    remove(@Param('id') id: number): Promise<void>{
+    remove(@Param('id') id: number): Promise<number>{
         return this.vendedoraService.removeVenda(id)
     }
 
@@ -33,9 +33,9 @@ export class VendedoraController {
         return this.vendedoraService.getVendaById(id)
     }
 
-    // @Put('/:id')
-    // async update(@Param('id') id: number){
-        
-    // }
+    @Put('/:id')
+    update(@Param('id', ParseIntPipe) id: number, @Body() createVendedoraDto: CreateVendedoraDto): Promise<Vendedora>{
+        return this.vendedoraService.updateVendedora(id, createVendedoraDto)
+    }
 
 }

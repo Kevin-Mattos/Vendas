@@ -8,11 +8,13 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { typeOrmConfig } from './config/typeorm.config';
 
 @Module({
-  imports: [TypeOrmModule.forRoot(typeOrmConfig),
-     ProdutoModule,
-      MaletaModule,
-       TipoModule,
-        VendaModule,
-         VendedoraModule],
+  imports: [
+    TypeOrmModule.forRoot(typeOrmConfig),
+    ProdutoModule,
+    MaletaModule,
+    TipoModule,
+    VendaModule,
+    VendedoraModule,
+  ],
 })
 export class AppModule {}

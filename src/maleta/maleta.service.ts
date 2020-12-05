@@ -28,7 +28,7 @@ export class MaletaService {
     }
 
     async insertMaleta(createMaletaDto: CreateMaletaDto): Promise<Maleta> {
-        console.log(createMaletaDto)  
+        console.log(createMaletaDto)
         return await this.repository.insertMaleta(createMaletaDto)
     }
 

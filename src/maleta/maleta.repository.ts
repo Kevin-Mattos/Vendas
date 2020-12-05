@@ -9,8 +9,9 @@ import { Maleta } from "./maleta.entity";
 export class MaletaRepository extends Repository<Maleta>{
 
     async insertMaleta(createMaletaDto: CreateMaletaDto): Promise<Maleta>{
-        const {nome} = createMaletaDto
+        const {nome , id_vendedora} = createMaletaDto
         let maleta = new Maleta()
+        maleta.id_vendedora = id_vendedora
         maleta.nome = nome
         try{
             await maleta.save()

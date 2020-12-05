@@ -30,4 +30,14 @@ export class VendedoraRepository extends Repository<Vendedora>{
         return await query.getMany()
 
     }
+
+    async updateVendedora(id: number, createVendedoraDto: CreateVendedoraDto): Promise<Vendedora> {
+        const {nome} = createVendedoraDto
+        let vendedora = new Vendedora()
+        vendedora.nome = nome
+        vendedora.id = id
+
+        return await this.save(vendedora)
+
+    }
 }

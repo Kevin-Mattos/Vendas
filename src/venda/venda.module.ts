@@ -5,8 +5,8 @@ import { VendaRepository } from './venda.repository';
 import { VendaService } from './venda.service';
 
 @Module({
-   imports:[TypeOrmModule.forFeature([VendaRepository])],
+  imports: [TypeOrmModule.forFeature([VendaRepository])],
   controllers: [VendaController],
-  providers: [VendaService]
+  providers: [VendaService],
 })
 export class VendaModule {}
