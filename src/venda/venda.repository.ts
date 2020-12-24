@@ -33,6 +33,7 @@ export class VendaRepository extends Repository<Venda>{
         venda.id_vendedora = id_vendedora
         venda.id = id
 
+        
         return await this.save(venda)
         
     }
@@ -41,9 +42,18 @@ export class VendaRepository extends Repository<Venda>{
         let timeElapsed = Date.now()
         let date = new Date(timeElapsed)
         let format = "yy-mm-dd"
+        let day = ""
+        let month = ""
+        
+        if(date.getDate() < 10)
+            day = `0${date.getDate()}`
+
+        if(date.getMonth() + 1 < 10)
+            month = `0${date.getMonth() + 1}`
+        
         return format.replace('mm', `${date.getMonth() + 1}`)
         .replace('yy', `${date.getFullYear()}`)
-        .replace('dd', `${date.getDate()}`);
+        .replace('dd', `${day}`);
             
     }
 
